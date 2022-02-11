@@ -40,12 +40,10 @@ public class RegistrationService {
 
         if (hasStudent) {
             student.deleteCourseRegistration(registration);
-            studentService.saveStudent(studentService.getStudentById(student.getId()));
         }
 
         if (hasCourse) {
             course.deleteCourseRegistration(registration);
-            courseService.saveCourse(courseService.getCourseById(course.getId()));
         }
 
         if (hasStudent && hasCourse) {
