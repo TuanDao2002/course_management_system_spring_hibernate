@@ -1,8 +1,5 @@
 package com.tutorial.example2.entity;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +17,14 @@ public class CourseRegistration {
 
     public CourseRegistration() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setStudent(Student student) {

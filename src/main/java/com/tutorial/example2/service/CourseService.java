@@ -36,7 +36,8 @@ public class CourseService {
     }
     
     public List<Course> getAllCourses(){
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Course.class);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Course.class)
+                        .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY); // not return duplicate records of courses
         return criteria.list();
     }
 

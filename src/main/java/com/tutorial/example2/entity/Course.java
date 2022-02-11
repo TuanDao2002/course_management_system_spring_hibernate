@@ -25,7 +25,7 @@ public class Course {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
     // delete the joined record and related foreign keys in records of other table
     // @OnDelete(action = OnDeleteAction.CASCADE) -> alternate implementation
-    @Cascade(CascadeType.ALL)
+    @Cascade({CascadeType.DETACH, CascadeType.DELETE})
     private List<CourseRegistration> courseRegistrations;
 
 	public Course() {

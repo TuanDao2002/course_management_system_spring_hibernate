@@ -59,22 +59,30 @@ public class Main {
         registrationService.saveRegistration(registration5);
 
         //Try delete the student to see what happens? (Add cascade to handle the problem)
-        courseService.deleteCourse(sadi);
-        studentService.deleteStudent(anotherStudent);
-        registrationService.dropCourseRegistration(registration5, context);
+        courseService.deleteCourse(wp);
+//        studentService.deleteStudent(anotherStudent);
+        registrationService.dropCourseRegistration(registration2, studentService, courseService);
 
         for (CourseRegistration registration : registrationService.getRegistrations()) {
             System.out.println(registration);
         }
 
-//        for (Student s : studentService.getAllStudents()) {
-//            System.out.println("ID: " + s.getId() + " -> " + s.getName());
-//            System.out.println("Has registered: " + s.getCourseRegistrations().size() + " courses.");
-//
-//            for (CourseRegistration registration : s.getCourseRegistrations()) {
-//                System.out.println(registration);
-//            }
+//        for (Course course : courseService.getAllCourses()) {
+//            System.out.println(course);
 //        }
+
+//        for (Student stu : studentService.getAllStudents()) {
+//            System.out.println(stu);
+//        }
+
+        for (Student s : studentService.getAllStudents()) {
+            System.out.println("ID: " + s.getId() + " -> " + s.getName());
+            System.out.println("Has registered: " + s.getCourseRegistrations().size() + " courses.");
+
+            for (CourseRegistration registration : s.getCourseRegistrations()) {
+                System.out.println(registration);
+            }
+        }
     }
 
 }

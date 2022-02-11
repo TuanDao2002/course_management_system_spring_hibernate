@@ -31,16 +31,25 @@ public class RegistrationService {
         return criteria.list();
     }
 
-    public void dropCourseRegistration(CourseRegistration registration, AnnotationConfigApplicationContext context) {
+    public void dropCourseRegistration(CourseRegistration registration, StudentService studentService, CourseService courseService) {
         Student student = registration.getStudent();
         Course course = registration.getCourse();
 
-        if(!context.containsBean(student.getName())) return;
-        student.deleteCourseRegistration(registration);
-        if(!context.containsBean(course.getName())) return;
-        course.deleteCourseRegistration(registration);
+        boolean hasStudent = studentService.getStudentById(student.getId()) != null;
+        boolean hasCourse = courseService.getCourseById(course.getId()) != null;
 
-        sessionFactory.getCurrentSession().delete(registration);
-//        registration = null;
+        if (hasStudent) {
+            student.deleteCourseRegistration(registration);
+            studentService.saveStudent(studentService.getStudentById(student.getId()));
+        }
+
+        if (hasCourse) {
+            course.deleteCourseRegistration(registration);
+            courseService.saveCourse(courseService.getCourseById(course.getId()));
+        }
+
+        if (hasStudent && hasCourse) {
+            sessionFactory.getCurrentSession().delete(sessionFactory.getCurrentSession().get(CourseRegistration.class, registration.getId()));
+        }
     }
 }
