@@ -44,10 +44,12 @@ public class CourseService {
     public void deleteCourse(Course course){
         sessionFactory.getCurrentSession().delete(course);
 
+        // delete all registrations of this course from students who enrolled it
         for (CourseRegistration registration : course.getCourseRegistrations()) {
             registration.getStudent().deleteCourseRegistration(registration);
         }
 
+        // set the registrations of this course to be null to prevent foreign key violation
         course.deleteAllRegistrations();
 
     }

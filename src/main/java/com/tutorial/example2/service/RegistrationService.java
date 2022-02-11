@@ -1,13 +1,11 @@
 package com.tutorial.example2.service;
 
-import com.tutorial.example2.config.AppConfig;
 import com.tutorial.example2.entity.Course;
 import com.tutorial.example2.entity.CourseRegistration;
 import com.tutorial.example2.entity.Student;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -31,10 +29,15 @@ public class RegistrationService {
         return criteria.list();
     }
 
+    public CourseRegistration getCourseRegistrationById(int id) {
+        return sessionFactory.getCurrentSession().get(CourseRegistration.class, id);
+    }
+
     public void dropCourseRegistration(CourseRegistration registration, StudentService studentService, CourseService courseService) {
         Student student = registration.getStudent();
         Course course = registration.getCourse();
 
+        // check if application context has Student and Course objects
         boolean hasStudent = studentService.getStudentById(student.getId()) != null;
         boolean hasCourse = courseService.getCourseById(course.getId()) != null;
 
@@ -46,8 +49,10 @@ public class RegistrationService {
             course.deleteCourseRegistration(registration);
         }
 
+        // if Student and Course objects exist in application context, get the CourseRegistration object in application context and delete it
+        // this is because deleting entity at the "many" side in one-to-many relationship is not cascade as the "one" side
         if (hasStudent && hasCourse) {
-            sessionFactory.getCurrentSession().delete(sessionFactory.getCurrentSession().get(CourseRegistration.class, registration.getId()));
+            sessionFactory.getCurrentSession().delete(this.getCourseRegistrationById(registration.getId()));
         }
     }
 }
