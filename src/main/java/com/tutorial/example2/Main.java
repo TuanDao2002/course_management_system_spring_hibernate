@@ -65,21 +65,21 @@ public class Main {
 
         //Try delete the student to see what happens? (Add cascade to handle the problem)
         courseService.deleteCourse(ucd);
-        studentService.deleteStudent(anotherStudent);
-        registrationService.dropCourseRegistration(registration1, studentService, courseService);
+        studentService.deleteStudent(student);
+        registrationService.dropCourseRegistration(registration3, studentService, courseService);
 
-//        for (CourseRegistration registration : registrationService.getRegistrations()) {
-//            System.out.println(registration);
-//        }
+        for (CourseRegistration registration : registrationService.getRegistrations()) {
+            System.out.println(registration);
+        }
 
 //        for (Course c : courseService.getAllCourses()) {
 //            System.out.println(c);
 //        }
 
-        for (Student stu : studentService.getAllStudents()) {
-            System.out.println(stu);
-            System.out.println(stu.getCourseRegistrations());
-        }
+//        for (Student stu : studentService.getAllStudents()) {
+//            System.out.println(stu);
+//            System.out.println(stu.getCourseRegistrations());
+//        }
 
 //        for (Student s : studentService.getAllStudents()) {
 //            System.out.println("ID: " + s.getId() + " -> " + s.getName());

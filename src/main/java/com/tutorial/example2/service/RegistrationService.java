@@ -37,21 +37,29 @@ public class RegistrationService {
         Student student = registration.getStudent();
         Course course = registration.getCourse();
 
-        // check if application context has Student and Course objects
-        boolean hasStudent = studentService.getStudentById(student.getId()) != null;
-        boolean hasCourse = courseService.getCourseById(course.getId()) != null;
+        // retrieve objects from session
+        Student studentInSession = studentService.getStudentById(student.getId());
+        Course courseInSession = courseService.getCourseById(course.getId());
 
+        // check if they exist or not
+        boolean hasStudent = studentInSession != null;
+        boolean hasCourse =  courseInSession != null;
+
+        // if they exist, delete the registration in each of them and evict them from session to prevent error
         if (hasStudent) {
             student.deleteCourseRegistration(registration);
+            sessionFactory.getCurrentSession().evict(studentInSession);
         }
 
         if (hasCourse) {
             course.deleteCourseRegistration(registration);
+            sessionFactory.getCurrentSession().evict(courseInSession);
         }
+
 
         // can only delete a persistent object to prevent error of different identifier with the same value in the session
         if (hasStudent && hasCourse) {
-            sessionFactory.getCurrentSession().delete(this.getCourseRegistrationById(registration.getId()));
+            sessionFactory.getCurrentSession().delete(registration);
         }
 
     }
