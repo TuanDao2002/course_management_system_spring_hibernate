@@ -7,6 +7,7 @@ import com.tutorial.example2.service.RegistrationService;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -33,7 +34,7 @@ public class AppConfig {
     }
 
     @Bean
-    public CourseRegistration courseRegistration(Student student, Course course) { return new CourseRegistration(student, course); }
+    public CourseRegistration courseRegistration() { return new CourseRegistration(); }
 	
     @Bean
     public StudentService studentService(){

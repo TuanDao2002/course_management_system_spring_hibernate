@@ -27,12 +27,16 @@ public class CourseRegistration {
         this.id = id;
     }
 
-    public void setStudent(Student student) {
+    public void setStudentAndCourse(Student student, Course course) {
         this.student = student;
-    }
-
-    public void setCourse(Course course) {
         this.course = course;
+        if (student != null) {
+            student.addCourseRegistration(this);
+        }
+
+        if (course != null) {
+            course.addCourseRegistration(this);
+        }
     }
 
     public Course getCourse() {
@@ -41,14 +45,6 @@ public class CourseRegistration {
 
     public Student getStudent() {
         return student;
-    }
-
-    public CourseRegistration(Student student, Course course){
-        this.student = student;
-        this.course = course;
-
-        student.addCourseRegistration(this);
-        course.addCourseRegistration(this);
     }
 
     @Override

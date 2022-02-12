@@ -49,10 +49,10 @@ public class RegistrationService {
             course.deleteCourseRegistration(registration);
         }
 
-        // if Student and Course objects exist in application context, get the CourseRegistration object in application context and delete it
-        // this is because deleting entity at the "many" side in one-to-many relationship is not cascade as the "one" side
+        // can only delete a persistent object to prevent error of different identifier with the same value in the session
         if (hasStudent && hasCourse) {
             sessionFactory.getCurrentSession().delete(this.getCourseRegistrationById(registration.getId()));
         }
+
     }
 }

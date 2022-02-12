@@ -43,46 +43,51 @@ public class Main {
 
         RegistrationService registrationService = (RegistrationService) context.getBean("registrationService");
 
-        CourseRegistration registration1 = new CourseRegistration(student, sadi);
+        CourseRegistration registration1 = new CourseRegistration();
+        registration1.setStudentAndCourse(student, sadi);
         registrationService.saveRegistration(registration1);
 
-        CourseRegistration registration2 = new CourseRegistration(student, wp);
+        CourseRegistration registration2 = new CourseRegistration();
+        registration2.setStudentAndCourse(student, wp);
         registrationService.saveRegistration(registration2);
 
-        CourseRegistration registration3 = new CourseRegistration(anotherStudent, wp);
+        CourseRegistration registration3 = new CourseRegistration();
+        registration3.setStudentAndCourse(anotherStudent, wp);
         registrationService.saveRegistration(registration3);
 
-        CourseRegistration registration4 = new CourseRegistration(anotherStudent, sadi);
+        CourseRegistration registration4 = new CourseRegistration();
+        registration4.setStudentAndCourse(anotherStudent, sadi);
         registrationService.saveRegistration(registration4);
 
-        CourseRegistration registration5 = new CourseRegistration(anotherStudent, ucd);
+        CourseRegistration registration5 = new CourseRegistration();
+        registration5.setStudentAndCourse(anotherStudent, ucd);
         registrationService.saveRegistration(registration5);
 
         //Try delete the student to see what happens? (Add cascade to handle the problem)
-        courseService.deleteCourse(wp);
-        studentService.deleteStudent(student);
-        registrationService.dropCourseRegistration(registration2, studentService, courseService);
+        courseService.deleteCourse(ucd);
+        studentService.deleteStudent(anotherStudent);
+        registrationService.dropCourseRegistration(registration1, studentService, courseService);
 
-//        for (CourseRegistration registration : registrationService.getRegistrations()) {
-//            System.out.println(registration);
-//        }
+        for (CourseRegistration registration : registrationService.getRegistrations()) {
+            System.out.println(registration);
+        }
 
-//        for (Course course : courseService.getAllCourses()) {
-//            System.out.println(course);
+//        for (Course c : courseService.getAllCourses()) {
+//            System.out.println(c);
 //        }
 
 //        for (Student stu : studentService.getAllStudents()) {
 //            System.out.println(stu);
 //        }
 
-        for (Student s : studentService.getAllStudents()) {
-            System.out.println("ID: " + s.getId() + " -> " + s.getName());
-            System.out.println("Has registered: " + s.getCourseRegistrations().size() + " courses.");
-
-            for (CourseRegistration registration : s.getCourseRegistrations()) {
-                System.out.println(registration);
-            }
-        }
+//        for (Student s : studentService.getAllStudents()) {
+//            System.out.println("ID: " + s.getId() + " -> " + s.getName());
+//            System.out.println("Has registered: " + s.getCourseRegistrations().size() + " courses.");
+//
+//            for (CourseRegistration registration : s.getCourseRegistrations()) {
+//                System.out.println(registration);
+//            }
+//        }
     }
 
 }
