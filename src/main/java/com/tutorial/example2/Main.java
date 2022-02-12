@@ -68,17 +68,18 @@ public class Main {
         studentService.deleteStudent(anotherStudent);
         registrationService.dropCourseRegistration(registration1, studentService, courseService);
 
-        for (CourseRegistration registration : registrationService.getRegistrations()) {
-            System.out.println(registration);
-        }
+//        for (CourseRegistration registration : registrationService.getRegistrations()) {
+//            System.out.println(registration);
+//        }
 
 //        for (Course c : courseService.getAllCourses()) {
 //            System.out.println(c);
 //        }
 
-//        for (Student stu : studentService.getAllStudents()) {
-//            System.out.println(stu);
-//        }
+        for (Student stu : studentService.getAllStudents()) {
+            System.out.println(stu);
+            System.out.println(stu.getCourseRegistrations());
+        }
 
 //        for (Student s : studentService.getAllStudents()) {
 //            System.out.println("ID: " + s.getId() + " -> " + s.getName());

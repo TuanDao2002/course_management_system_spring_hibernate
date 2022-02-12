@@ -61,7 +61,7 @@ public class Course {
     }
 
     public void deleteAllRegistrations() {
-        courseRegistrations = new ArrayList<>();
+        courseRegistrations.clear();
     }
 
     @Override
