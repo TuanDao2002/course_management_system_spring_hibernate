@@ -34,6 +34,11 @@ public class RegistrationService {
     }
 
     public void dropCourseRegistration(CourseRegistration registration, StudentService studentService, CourseService courseService) {
+        // check if the registration exists in session
+        if (sessionFactory.getCurrentSession().get(CourseRegistration.class, registration.getId()) == null) return;
+        // evict it from session after checking to prevent error
+        sessionFactory.getCurrentSession().evict(registration);
+
         Student student = registration.getStudent();
         Course course = registration.getCourse();
 
@@ -45,7 +50,7 @@ public class RegistrationService {
         boolean hasStudent = studentInSession != null;
         boolean hasCourse =  courseInSession != null;
 
-        // if they exist, delete the registration in each of them and evict them from session to prevent error
+        // if they exist, delete the registration in each of their POJO objects and evict them from session to prevent error
         if (hasStudent) {
             student.deleteCourseRegistration(registration);
             sessionFactory.getCurrentSession().evict(studentInSession);
