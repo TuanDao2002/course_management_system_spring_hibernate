@@ -56,8 +56,6 @@ public class RegistrationService {
             sessionFactory.getCurrentSession().evict(courseInSession);
         }
 
-
-        // can only delete a persistent object to prevent error of different identifier with the same value in the session
         if (hasStudent && hasCourse) {
             sessionFactory.getCurrentSession().delete(registration);
         }
