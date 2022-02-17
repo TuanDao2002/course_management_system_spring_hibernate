@@ -49,9 +49,6 @@ public class CourseService {
             registration.getStudent().deleteCourseRegistration(registration);
         }
 
-        // set the registrations of this course to be null to prevent foreign key violation
-        course.deleteAllRegistrations();
-
     }
 
     public Course getCourseById(int id){
